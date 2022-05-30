@@ -1,28 +1,67 @@
 package com.bl.address_book_system;
+
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class AddressBook {
 
-    public void personInputDetails() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter First Name : ");
-        String firstName = sc.nextLine();
-        System.out.println("Enter Last Name : ");
-        String lastName = sc.nextLine();
-        System.out.println("Enter Address : ");
-        String address = sc.nextLine();
-        System.out.println("Enter City : ");
-        String city = sc.nextLine();
-        System.out.println("Enter State : ");
-        String state = sc.nextLine();
-        System.out.println("Enter Email : ");
-        String email = sc.nextLine();
-        System.out.println("Enter zip : ");
-        int zip = sc.nextInt();
-        System.out.println("Enter PhoneNumber : ");
-        long phoneNumber = sc.nextLong();
+    ArrayList<Contacts> contactsArrayList = new ArrayList<>();
+    Scanner sc = new Scanner(System.in);
 
-        Contacts con = new Contacts(firstName, lastName, address, city, state, email, zip, phoneNumber);
+    public Contacts personInputDetails() {
+        Contacts contact = new Contacts();
+        System.out.print("Enter First Name: ");
+        contact.setFirstName(sc.nextLine());
+        System.out.print("Enter Last Name: ");
+        contact.setLastName(sc.nextLine());
+        System.out.print("Enter Address: ");
+        contact.setAddress(sc.nextLine());
+        System.out.print("Enter City: ");
+        contact.setCity(sc.nextLine());
+        System.out.print("Enter State: ");
+        contact.setState(sc.nextLine());
+        System.out.print("Enter Email Id: ");
+        contact.setEmail(sc.nextLine());
+        System.out.print("Enter Phone number: ");
+        contact.setPhoneNumber(sc.nextLong());
+        System.out.print("Enter Zipcode: ");
+        contact.setZip(sc.nextInt());
+        this.contactsArrayList.add(contact);
+        return contact;
+    }
+
+    public void displayContact() {
+        for (Contacts contact : contactsArrayList) {
+            System.out.println("First name : " + contact.firstName);
+            System.out.println("last name : " + contact.lastName);
+            System.out.println("Address : " + contact.address);
+            System.out.println("City : " + contact.city);
+            System.out.println("State : " + contact.state);
+            System.out.println("Email Id : " + contact.email);
+            System.out.println("Phone number : " + contact.phoneNumber);
+            System.out.println("Zipcode : " + contact.zip);
+        }
+    }
+
+    public int findContact(String firstName) {
+        for (Contacts cont : contactsArrayList) {
+            if (firstName.compareToIgnoreCase(cont.getFirstName()) == 0) {
+                return contactsArrayList.indexOf(cont);
+            }
+        }
+        return -1;
+    }
+
+    public void editContact() {
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Enter first name : ");
+        String firstName = scan.next();
+        int index = findContact(firstName);
+        if (index == 0) {
+            contactsArrayList.set(index, personInputDetails());
+        } else {
+            System.out.println("Contact not found ");
+        }
     }
 }
 
